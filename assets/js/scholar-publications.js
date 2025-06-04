@@ -313,6 +313,21 @@
                 <p>${formattedAuthors}. ${publication.title}. <i>${publication.venue}</i>, ${year}.${doiLink}</p>
             </div>
         `;
+
+        // Fix View link to use DOI URL if available, else use link, else disable
+        const viewLink = div.querySelector('a[target="_blank"]');
+        if (viewLink) {
+            if (publication.doi) {
+                viewLink.href = `https://doi.org/${publication.doi}`;
+            } else if (publication.link) {
+                viewLink.href = publication.link;
+            } else {
+                viewLink.removeAttribute('href');
+                viewLink.style.pointerEvents = 'none';
+                viewLink.style.color = 'gray';
+                viewLink.textContent = 'No link available';
+            }
+        }
         
         return div;
     }
