@@ -243,13 +243,15 @@
                 const yearElement = entry.querySelector('.gsc_a_y');
                 
                 if (titleElement && authorsElement && yearElement) {
-                    const publication = {
-                        title: titleElement.textContent.trim(),
-                        authors: authorsElement.textContent.trim(),
-                        venue: venueElement ? venueElement.textContent.trim() : '',
-                        year: yearElement.textContent.trim(),
-                        link: titleElement.href || ''
-                    };
+        const publication = {
+            title: titleElement.textContent.trim(),
+            authors: authorsElement.textContent.trim(),
+            venue: venueElement ? venueElement.textContent.trim() : '',
+            year: yearElement.textContent.trim(),
+            // Use DOI link directly if available, else fallback to title href
+            link: '', // Clear link to avoid incorrect URLs
+            doi: extractDOI(titleElement.href) || ''
+        };
                     
                     publications.push(publication);
                 }
